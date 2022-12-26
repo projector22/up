@@ -4,22 +4,8 @@
 # Linux Updater tool. Runs through a number of possible linuxy updating solutions and 
 # if they are available, run each updater.
 # 
-# Types Available:
-# - Apt
-# - Nala (Apt frontend)
-# - Snap
-# - Flatpak
-# - Yum
-# - PiHole
-# - Pip3 - Only lists updates.
-#
-# Would like to add:
-# - DNF
-# - Pacman
-#
-# Todo:
-# - Add flags to skip individual packages - for example, `--skip-pip`.
-# - Add flag to force Apt over Nala.
+# See:
+#   https://github.com/projector22/up/blob/master/README.md
 # 
 # Arguments:
 # - --skip-self-update
@@ -84,19 +70,19 @@ done
 
 echo Checking for updates - Apt, Yum, Flatpak
 
-if [ $SKIP_SELF_UPDATE -ne 0 ]
-then
-  echo -e "\nUpdating this script..."
-  cd ~/bin
-  prev=$(git rev-list HEAD -n 1)
-  git pull
-  if test $prev != $(git rev-list HEAD -n 1)
-  then
-    echo "Script Updated"
-    up --skip-self-update $@
-    exit 0
-  fi
-fi
+# if [ $SKIP_SELF_UPDATE -ne 0 ]
+# then
+#   echo -e "\nUpdating this script..."
+#   cd ~/bin
+#   prev=$(git rev-list HEAD -n 1)
+#   git pull
+#   if test $prev != $(git rev-list HEAD -n 1)
+#   then
+#     echo "Script Updated"
+#     up --skip-self-update $@
+#     exit 0
+#   fi
+# fi
 
 if [ $SKIP_APT -ne 0 ]
 then
