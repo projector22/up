@@ -30,49 +30,42 @@ SKIP_PIHOLE=1
 SKIP_PIP=1
 SKIP_RCLONE=1
 
-for i in "$@";
-do
+
+while [ "$1" != "" ]; do
   case $1 in
     --skip-self-update)
-    SKIP_SELF_UPDATE=0
-    shift
+      SKIP_SELF_UPDATE=0
     ;;
     --skip-apt)
-    SKIP_APT=0
-    shift
+      SKIP_APT=0
     ;;
     --skip-snap)
-    SKIP_SNAP=0
-    shift
+      SKIP_SNAP=0
     ;;
     --skip-yum)
-    SKIP_YUM=0
-    shift
+      SKIP_YUM=0
     ;;
     --skip-flatpak)
-    SKIP_FLATPAK=0
-    shift
+      SKIP_FLATPAK=0
     ;;
     --skip-pihole)
-    SKIP_PIHOLE=0
-    shift
+      SKIP_PIHOLE=0
     ;;
     --skip-pip)
-    SKIP_PIP=0
-    shift
+      SKIP_PIP=0
     ;;
     --skip-rclone)
-    SKIP_RCLONE=0
-    shift
+      SKIP_RCLONE=0
     ;;
   esac
+  shift
 done
 
-echo Checking for updates - Apt, Yum, Flatpak
+printf "Checking for all available updates for your system."
 
 # if [ $SKIP_SELF_UPDATE -ne 0 ]
 # then
-#   echo -e "\nUpdating this script..."
+#   printf "\nUpdating this script..."
 #   cd ~/bin
 #   prev=$(git rev-list HEAD -n 1)
 #   git pull
@@ -88,75 +81,75 @@ if [ $SKIP_APT -ne 0 ]
 then
   if hash nala 2>/dev/null; then
     # Repo: https://gitlab.com/volian/nala
-    echo -e "\nNALA"
+    printf "\n\nNALA"
     sudo nala upgrade -yy
     sudo nala install --fix-broken
     sudo nala autoremove -yy
     sudo nala clean
   elif hash apt 2>/dev/null; then
-    echo -e "\nAPT"
+    printf "\n\nAPT"
     sudo apt update
     sudo apt list --upgradable
     sudo apt --fix-broken install
     sudo apt full-upgrade -yy
     sudo apt autoremove -yy
     sudo apt clean -yy
-    echo -e "Apt update task complete"
+    printf "Apt update task complete"
   fi
 fi
 
 if [ $SKIP_SNAP -ne 0 ]
 then
   if hash snap 2>/dev/null; then
-    echo -e "\nSNAP"
+    printf "\n\nSNAP\n"
     sudo snap refresh
-    echo -e "snap update task complete"
+    printf "snap update task complete"
   fi
 fi
 
 if [ $SKIP_YUM -ne 0 ]
 then
   if hash yum 2>/dev/null; then
-    echo -e "\nYUM"
+    printf "\n\nYUM"
     sudo yum update -yy
-    echo -e "yum update task complete"
+    printf "yum update task complete"
   fi
 fi
 
 if [ $SKIP_FLATPAK -ne 0 ]
 then
   if hash flatpak 2>/dev/null; then
-    echo -e "\nFLATPAK"
+    printf "\n\nFLATPAK"
     sudo flatpak update -yy
-    echo -e "flatpak update task complete"
+    printf "flatpak update task complete"
   fi
 fi
 
 if [ $SKIP_PIHOLE -ne 0 ]
 then
   if hash pihole 2>/dev/null; then
-    echo -e "\nPIHOLE"
+    printf "\n\nPIHOLE"
     pihole -up
-    echo -e "pihole update task complete"
+    printf "pihole update task complete"
   fi
 fi
 
 if [ $SKIP_RCLONE -ne 0 ]
 then
   if hash rclone 2>/dev/null; then
-    echo -e "\nRCLONE"
+    printf "\n\nRCLONE"
     sudo rclone selfupdate
-    echo -e "rclone update task complete"
+    printf "rclone update task complete"
   fi
 fi
 
 if [ $SKIP_PIP -ne 0 ]
 then
   if hash pip3 2>/dev/null; then
-    echo -e "\nPIP3 - run pip3 install -U APPNAME to update an individual package\n"
+    printf "\n\nPIP3\nrun pip3 install -U APPNAME to update an individual package\n\n"
     pip3 list --outdated
     # pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U 
   fi
 fi
 
-echo -e "\n\nAll updates complete"
+printf "\nAll updates complete\n"
