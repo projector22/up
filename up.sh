@@ -21,6 +21,14 @@
 # Gareth Palmer [@projector22]
 ##
 
+
+# Ask for Super User password immediately.
+
+sudo ls >/dev/null
+
+
+# Set action variables.
+
 SKIP_SELF_UPDATE=1
 SKIP_APT=1
 SKIP_SNAP=1
@@ -30,6 +38,8 @@ SKIP_PIHOLE=1
 SKIP_PIP=1
 SKIP_RCLONE=1
 
+
+# Filter through the parsed arguments and change the action variables as needed
 
 while [ "$1" != "" ]; do
   case $1 in
@@ -63,11 +73,20 @@ done
 
 printf "Checking for all available updates for your system."
 
+
+# Update the LNS package as well as all the other subpackages used by LNS
+
 if [ $SKIP_SELF_UPDATE -ne 0 ]
 then
+
+  # Update LNS
+
   printf "\nUpdating LNS..."
   cd ~/bin
   git pull
+
+
+  # Update UP specifically and restart the script (skipping this section if an update is detected)
 
   printf "Updating this script..."
   cd ~/bin/apps/up
@@ -77,16 +96,24 @@ then
   then
     echo "Script Updated"
     cd ~/bin
-    lns --update
+    lns --update # Update the LNS called repos packages
     up --skip-self-update $@
     exit 0
   fi
-  lns --update
+  lns --update # Update the LNS called repos packages
+
+  ##
+  # TODO:
+  #    Detect if a new package exists in LNS and pull it.
+  ##
 fi
 
+
+# Update APT / NALA
 if [ $SKIP_APT -ne 0 ]
 then
   if hash nala 2>/dev/null; then
+    # Update NALA
     # Repo: https://gitlab.com/volian/nala
     printf "\nNALA\n"
     sudo nala upgrade -yy
@@ -94,6 +121,7 @@ then
     sudo nala autoremove -yy
     sudo nala clean
   elif hash apt 2>/dev/null; then
+    # Update APT
     printf "\nAPT\n"
     sudo apt update
     sudo apt list --upgradable
@@ -106,6 +134,7 @@ fi
 
 if [ $SKIP_SNAP -ne 0 ]
 then
+  # Update SNAP
   if hash snap 2>/dev/null; then
     printf "\nSNAP\n"
     sudo snap refresh
@@ -114,6 +143,7 @@ fi
 
 if [ $SKIP_YUM -ne 0 ]
 then
+  # Update YUM
   if hash yum 2>/dev/null; then
     printf "\nYUM\n"
     sudo yum update -yy
@@ -122,6 +152,7 @@ fi
 
 if [ $SKIP_FLATPAK -ne 0 ]
 then
+  # Update Flatpak
   if hash flatpak 2>/dev/null; then
     printf "\nFLATPAK\n"
     sudo flatpak update -yy
@@ -130,6 +161,7 @@ fi
 
 if [ $SKIP_PIHOLE -ne 0 ]
 then
+  # Update PiHole
   if hash pihole 2>/dev/null; then
     printf "\nPIHOLE\n"
     pihole -up
@@ -138,6 +170,7 @@ fi
 
 if [ $SKIP_RCLONE -ne 0 ]
 then
+  # Update rclone
   if hash rclone 2>/dev/null; then
     printf "\nRCLONE\n"
     sudo rclone selfupdate
@@ -146,6 +179,7 @@ fi
 
 if [ $SKIP_PIP -ne 0 ]
 then
+  # Check if any PIP3 updates exist.
   if hash pip3 2>/dev/null; then
     printf "\nPIP3\nrun pip3 install -U APPNAME to update an individual package\n\n"
     pip3 list --outdated
