@@ -63,19 +63,24 @@ done
 
 printf "Checking for all available updates for your system."
 
-# if [ $SKIP_SELF_UPDATE -ne 0 ]
-# then
-#   printf "\nUpdating this script..."
-#   cd ~/bin
-#   prev=$(git rev-list HEAD -n 1)
-#   git pull
-#   if test $prev != $(git rev-list HEAD -n 1)
-#   then
-#     echo "Script Updated"
-#     up --skip-self-update $@
-#     exit 0
-#   fi
-# fi
+if [ $SKIP_SELF_UPDATE -ne 0 ]
+then
+  printf "\nUpdating this script..."
+  cd ~/bin
+  git pull
+
+  cd ~/bin/up
+  prev=$(git rev-list HEAD -n 1)
+  git pull
+  if test $prev != $(git rev-list HEAD -n 1)
+  then
+    echo "Script Updated"
+    cd ~/bin
+    lns --update
+    up --skip-self-update $@
+    exit 0
+  fi
+fi
 
 if [ $SKIP_APT -ne 0 ]
 then
