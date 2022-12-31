@@ -65,10 +65,11 @@ printf "Checking for all available updates for your system."
 
 if [ $SKIP_SELF_UPDATE -ne 0 ]
 then
-  printf "\nUpdating this script..."
+  printf "\nUpdating LNS..."
   cd ~/bin
   git pull
 
+  printf "Updating this script..."
   cd ~/bin/apps/up
   prev=$(git rev-list HEAD -n 1)
   git pull
@@ -80,81 +81,76 @@ then
     up --skip-self-update $@
     exit 0
   fi
+  lns --update
 fi
 
 if [ $SKIP_APT -ne 0 ]
 then
   if hash nala 2>/dev/null; then
     # Repo: https://gitlab.com/volian/nala
-    printf "\n\nNALA"
+    printf "\nNALA\n"
     sudo nala upgrade -yy
     sudo nala install --fix-broken
     sudo nala autoremove -yy
     sudo nala clean
   elif hash apt 2>/dev/null; then
-    printf "\n\nAPT"
+    printf "\nAPT\n"
     sudo apt update
     sudo apt list --upgradable
     sudo apt --fix-broken install
     sudo apt full-upgrade -yy
     sudo apt autoremove -yy
     sudo apt clean -yy
-    printf "Apt update task complete"
   fi
 fi
 
 if [ $SKIP_SNAP -ne 0 ]
 then
   if hash snap 2>/dev/null; then
-    printf "\n\nSNAP\n"
+    printf "\nSNAP\n"
     sudo snap refresh
-    printf "snap update task complete"
   fi
 fi
 
 if [ $SKIP_YUM -ne 0 ]
 then
   if hash yum 2>/dev/null; then
-    printf "\n\nYUM"
+    printf "\nYUM\n"
     sudo yum update -yy
-    printf "yum update task complete"
   fi
 fi
 
 if [ $SKIP_FLATPAK -ne 0 ]
 then
   if hash flatpak 2>/dev/null; then
-    printf "\n\nFLATPAK"
+    printf "\nFLATPAK\n"
     sudo flatpak update -yy
-    printf "flatpak update task complete"
   fi
 fi
 
 if [ $SKIP_PIHOLE -ne 0 ]
 then
   if hash pihole 2>/dev/null; then
-    printf "\n\nPIHOLE"
+    printf "\nPIHOLE\n"
     pihole -up
-    printf "pihole update task complete"
   fi
 fi
 
 if [ $SKIP_RCLONE -ne 0 ]
 then
   if hash rclone 2>/dev/null; then
-    printf "\n\nRCLONE"
+    printf "\nRCLONE\n"
     sudo rclone selfupdate
-    printf "rclone update task complete"
   fi
 fi
 
 if [ $SKIP_PIP -ne 0 ]
 then
   if hash pip3 2>/dev/null; then
-    printf "\n\nPIP3\nrun pip3 install -U APPNAME to update an individual package\n\n"
+    printf "\nPIP3\nrun pip3 install -U APPNAME to update an individual package\n\n"
     pip3 list --outdated
     # pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U 
   fi
 fi
 
-printf "\nAll updates complete\n"
+printf "\n\nAll update tasks complete\n"
