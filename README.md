@@ -15,8 +15,9 @@ Perform an update on various linuxy systems and tools
 
 ### Specific Applications
 
-- PiHole
-- rclone
+- [PiHole](https://github.com/pi-hole/pi-hole)
+- [rclone](https://github.com/rclone/rclone)
+- [Linux New System](https://github.com/projector22/linux-new-system)
 
 ## To Add
 
