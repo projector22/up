@@ -69,7 +69,7 @@ then
   cd ~/bin
   git pull
 
-  cd ~/bin/up
+  cd ~/bin/apps/up
   prev=$(git rev-list HEAD -n 1)
   git pull
   if test $prev != $(git rev-list HEAD -n 1)
