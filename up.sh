@@ -26,6 +26,18 @@
 
 sudo ls >/dev/null
 
+config_dir="$HOME/.config/up"
+config_file="$config_dir/up.dat"
+if [ -f "$config_file" ]; then
+    decoded_file="$config_dir/up.tmp"
+    base64 -d -i "$config_file" > "$decoded_file"
+    source "$decoded_file"
+    echo $NTFY_URL
+    rm $decoded_file
+else
+    mkdir -p $config_dir && touch $config_file
+fi
+
 
 # Set action variables.
 
@@ -37,7 +49,7 @@ SKIP_FLATPAK=1
 SKIP_PIHOLE=1
 SKIP_PIP=1
 SKIP_RCLONE=1
-
+SET_NTFY_URL=0
 
 # Filter through the parsed arguments and change the action variables as needed
 
@@ -67,11 +79,38 @@ while [ "$1" != "" ]; do
     --skip-rclone)
       SKIP_RCLONE=0
     ;;
+    --set-ntfy)
+      SET_NTFY_URL=1
+    ;;
   esac
   shift
 done
 
 printf "Checking for all available updates for your system."
+
+validate_url() {
+    local url="$1"
+    url_regex="^(http|https)://[A-Za-z0-9.-]+(/[A-Za-z0-9.-]+)*$"
+    
+    if [[ $url =~ $url_regex ]]; then
+        base64_response=$(echo -n "NTFY_URL=$url" | base64)
+        echo $base64_response > "$config_file"
+    else
+        echo "Invalid URL: $url"
+        exit 1
+    fi
+}
+
+
+if [ $SET_NTFY_URL -ne 0 ]
+then
+  read -p "Set the full NTFY server url including the http/s: " url
+  validate_url "$url"
+  printf "Done...\n"
+  exit 0
+fi
+
+
 
 
 # Update the LNS package as well as all the other subpackages used by LNS
