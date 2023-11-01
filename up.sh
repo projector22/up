@@ -12,10 +12,12 @@
 # - --skip-apt
 # - --skip-snap
 # - --skip-yum
+# - --skip-dnf
 # - --skip-flatpak
 # - --skip-pihole
 # - --skip-pip
 # - --skip-rclone
+# - --set-ntfy _url_
 #
 # Author:
 # Gareth Palmer [@projector22]
@@ -64,6 +66,9 @@ while [ "$1" != "" ]; do
       SKIP_SNAP=0
     ;;
     --skip-yum)
+      SKIP_YUM=0
+    ;;
+    --skip-dnf)
       SKIP_YUM=0
     ;;
     --skip-flatpak)
@@ -221,10 +226,15 @@ then
   fi
 fi
 
+# DNF / YUM
 if [ $SKIP_YUM -ne 0 ]
 then
-  # Update YUM
-  if hash yum 2>/dev/null; then
+  if hash dnf 2>/dev/null; then
+    # Update DNF
+    printf "\nDNF\n"
+    sudo yum update -yy
+  elif hash yum 2>/dev/null; then
+    # Update YUM
     printf "\nYUM\n"
     sudo yum update -yy
   fi

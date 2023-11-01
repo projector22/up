@@ -10,7 +10,7 @@ Perform an update on various linuxy systems and tools
 - Nala (Apt frontend)
 - Snap
 - Flatpak
-- Yum
+- Yum / DNF
 - Pip3 - Only lists updates.
 
 ### Specific Applications
@@ -21,7 +21,6 @@ Perform an update on various linuxy systems and tools
 
 ## To Add
 
-- dnf
 - Pacman
 
 ## Todo
