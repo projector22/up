@@ -1,5 +1,14 @@
 # up
 
+## v0.2.0 - 2023-11-01
+
+### Added
+
+- Added support for DNF
+- Added option to send an NTFY push notification when up finishes.
+
+---
+
 ## v0.1.1 - 2022-12-31
 
 ### Added
