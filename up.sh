@@ -32,7 +32,6 @@ if [ -f "$config_file" ]; then
     decoded_file="$config_dir/up.tmp"
     base64 -d -i "$config_file" > "$decoded_file"
     source "$decoded_file"
-    echo $NTFY_URL
     rm $decoded_file
 else
     mkdir -p $config_dir && touch $config_file
@@ -81,36 +80,78 @@ while [ "$1" != "" ]; do
     ;;
     --set-ntfy)
       SET_NTFY_URL=1
+      NEW_URL="$2"
     ;;
   esac
   shift
 done
-
-printf "Checking for all available updates for your system."
 
 validate_url() {
     local url="$1"
     url_regex="^(http|https)://[A-Za-z0-9.-]+(/[A-Za-z0-9.-]+)*$"
     
     if [[ $url =~ $url_regex ]]; then
-        base64_response=$(echo -n "NTFY_URL=$url" | base64)
-        echo $base64_response > "$config_file"
+      return 0
     else
-        echo "Invalid URL: $url"
-        exit 1
+      echo "Invalid URL: $url"
+      exit 1
     fi
 }
 
+save_config() {
+  local url="$1"
+  base64_response=$(echo -n "NTFY_URL=$url" | base64)
+  printf $base64_response > "$config_file"  
+}
 
-if [ $SET_NTFY_URL -ne 0 ]
+send_ntfy() {
+  local url="$1"
+  local msg="$2"
+
+  user_name=$(whoami)
+  host_name=$(hostname)
+
+  curl \
+    -H "Title: Up Linux Updater" \
+    -H "Tags: package,$host_name,up-updater" \
+    -d "$msg 
+    
+Sent from $user_name@$host_name 🧔💻" $url >/dev/null 2>&1
+}
+
+if [ $SET_NTFY_URL -ne 0 ] 
 then
-  read -p "Set the full NTFY server url including the http/s: " url
+  if [ -n $NTFY_URL ]; then
+    printf "Current NTFY URL: $NTFY_URL\n"
+  fi
+
+  if [ -n $NEW_URL ] && [ "$NEW_URL" != "" ]
+  then
+    url="$NEW_URL"
+  else
+    read -p "Set the full NTFY server url including the http/s: " url
+  fi
   validate_url "$url"
-  printf "Done...\n"
-  exit 0
+  send_ntfy $url "Test Notification 🧪💪"
+  while true; do
+      read -p "Did you receive a notification? (y/n): " response
+
+      if [ "$response" = "y" ]; then
+            printf "Saving... "
+            save_config $url
+            printf "Done\n"
+            exit 0
+      elif [ "$response" = "n" ]; then
+          printf "Cancelling, please check your NTFY URL.\n";
+          exit 1
+      else
+          echo "Invalid response. Please enter 'y' for yes or 'n' for no."
+      fi
+  done
 fi
 
 
+printf "Checking for all available updates for your system."
 
 
 # Update the LNS package as well as all the other subpackages used by LNS
@@ -224,6 +265,10 @@ then
     pip3 list --outdated
     # pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U 
   fi
+fi
+
+if [ -n $NTFY_URL ]; then
+  send_ntfy $NTFY_URL "System update complete ✅"
 fi
 
 printf "\n\nAll update tasks complete\n"
