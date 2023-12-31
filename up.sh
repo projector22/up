@@ -17,6 +17,7 @@
 # - --skip-pihole
 # - --skip-pip
 # - --skip-rclone
+# - --skip-rustup
 # - --set-ntfy _url_
 #
 # Author:
@@ -50,6 +51,7 @@ SKIP_FLATPAK=1
 SKIP_PIHOLE=1
 SKIP_PIP=1
 SKIP_RCLONE=1
+SKIP_RUSTUP=1
 SET_NTFY_URL=0
 
 # Filter through the parsed arguments and change the action variables as needed
@@ -82,6 +84,9 @@ while [ "$1" != "" ]; do
     ;;
     --skip-rclone)
       SKIP_RCLONE=0
+    ;;
+    --skip-rustup)
+      SKIP_RUSTUP=0
     ;;
     --set-ntfy)
       SET_NTFY_URL=1
@@ -264,6 +269,15 @@ then
   if hash rclone 2>/dev/null; then
     printf "\nRCLONE\n"
     sudo rclone selfupdate
+  fi
+fi
+
+if [ $SKIP_RUSTUP -ne 0 ]
+then
+  # Update Rust
+  if hash rustup 2>/dev/null; then
+    printf "\nRUSTUP\n"
+    rustup update stable
   fi
 fi
 
