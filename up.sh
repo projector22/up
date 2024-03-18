@@ -15,7 +15,7 @@
 # - --skip-dnf
 # - --skip-flatpak
 # - --skip-pihole
-# - --skip-pip
+# - --include-pip
 # - --skip-rclone
 # - --skip-rustup
 # - --set-ntfy _url_
@@ -49,7 +49,7 @@ SKIP_SNAP=1
 SKIP_YUM=1
 SKIP_FLATPAK=1
 SKIP_PIHOLE=1
-SKIP_PIP=1
+INCLUDE_PIP=0
 SKIP_RCLONE=1
 SKIP_RUSTUP=1
 SET_NTFY_URL=0
@@ -79,8 +79,8 @@ while [ "$1" != "" ]; do
     --skip-pihole)
       SKIP_PIHOLE=0
     ;;
-    --skip-pip)
-      SKIP_PIP=0
+    --include-pip)
+      INCLUDE_PIP=1
     ;;
     --skip-rclone)
       SKIP_RCLONE=0
@@ -281,7 +281,7 @@ then
   fi
 fi
 
-if [ $SKIP_PIP -ne 0 ]
+if [ $INCLUDE_PIP -ne 0 ]
 then
   # Check if any PIP3 updates exist.
   if hash pip3 2>/dev/null; then
