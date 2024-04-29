@@ -13,6 +13,7 @@
 # - --skip-snap
 # - --skip-yum
 # - --skip-dnf
+# - --skip-pacman
 # - --skip-flatpak
 # - --skip-pihole
 # - --include-pip
@@ -47,6 +48,7 @@ SKIP_SELF_UPDATE=1
 SKIP_APT=1
 SKIP_SNAP=1
 SKIP_YUM=1
+SKIP_PACMAN=1
 SKIP_FLATPAK=1
 SKIP_PIHOLE=1
 INCLUDE_PIP=0
@@ -72,6 +74,9 @@ while [ "$1" != "" ]; do
     ;;
     --skip-dnf)
       SKIP_YUM=0
+    ;;
+    --skip-pacamn)
+      SKIP_PACMAN=0
     ;;
     --skip-flatpak)
       SKIP_FLATPAK=0
@@ -242,6 +247,14 @@ then
     # Update YUM
     printf "\nYUM\n"
     sudo yum update -yy
+  fi
+fi
+
+# Pacman
+if [ $SKIP_PACMAN -ne 0 ]
+then
+  if hash pacman 2>/dev/null; then
+    pacman -Syu --noconfirm
   fi
 fi
 
