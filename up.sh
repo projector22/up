@@ -124,7 +124,7 @@ send_ntfy() {
   local msg="$2"
 
   user_name=$(whoami)
-  host_name=$(hostname)
+  host_name=$(hostname || uname -n)
 
   curl \
     -H "Title: Up Linux Updater" \
