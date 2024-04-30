@@ -254,6 +254,7 @@ fi
 if [ $SKIP_PACMAN -ne 0 ]
 then
   if hash pacman 2>/dev/null; then
+    printf "\nPACMAN\n"
     sudo pacman -Syu --noconfirm
   fi
 fi
