@@ -305,6 +305,11 @@ then
   fi
 fi
 
+if hash pipx 2>/dev/null; then
+    printf "\nPIPX\n"
+    pipx upgrade-all
+fi
+
 if [ -n $NTFY_URL ]; then
   send_ntfy $NTFY_URL "System update complete ✅"
 fi
