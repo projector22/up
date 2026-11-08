@@ -62,7 +62,7 @@ SET_NTFY_URL=0
 
 # Filter through the parsed arguments and change the action variables as needed
 
-while [ "$1" != "" ]; do
+while [[ $# -gt 0 ]]; do
   case $1 in
     --skip-self-update)
       SKIP_SELF_UPDATE=0
