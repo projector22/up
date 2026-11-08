@@ -32,10 +32,6 @@ curl -fsSL https://raw.githubusercontent.com/projector22/up/master/src/uninstall
 - [Rust](https://github.com/rust-lang/rustup)
 - [Linux New System](https://github.com/projector22/linux-new-system)
 
-## To Add
-
-- Pacman
-
 ## Todo
 
 - Add flag to force Apt over Nala.
