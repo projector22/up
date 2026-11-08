@@ -7,7 +7,6 @@ REPO=https://github.com/projector22/up.git
 BIN_DIR=~/bin
 
 if [[ -d "$INSTALL_DIR" ]]; then
-	printf "%s\n" "Removing install directory for reinstall..."
 	rm -rf "$INSTALL_DIR"
 fi
 mkdir -p "$INSTALL_DIR"
