@@ -30,7 +30,7 @@
 
 sudo ls >/dev/null
 INSTALL_DIR=~/.up
-cat "$INSTALL_DIR"/src/ntfy.sh
+
 if [[ -d "$INSTALL_DIR" ]]; then
   source "$INSTALL_DIR"/src/ntfy.sh
 
