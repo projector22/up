@@ -13,7 +13,7 @@ fi
 mkdir -p "$INSTALL_DIR"
 cd "$INSTALL_DIR"
 
-printf "%s\n" "Cloning..."
+printf "%s" "Installing..."
 git clone "$REPO" . >/dev/null 2>&1
 
 mkdir -p "~/$BIN_DIR"
@@ -26,5 +26,5 @@ if [[ -L "$BIN_DIR/up" ]]; then
 fi
 ln -s "$INSTALL_DIR/up.sh" "$BIN_DIR/up"
 
-printf "%s\n" "Done..."
+printf "%s\n" "Done"
 
