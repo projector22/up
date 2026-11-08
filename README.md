@@ -5,13 +5,13 @@ Perform an update on various linuxy systems and tools.
 ## Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/projector22/up/master/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/projector22/up/master/src/install.sh | bash
 ```
 
 ## Uninstall
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/projector22/up/master/uninstall.sh | bash
+curl -fsSL https://raw.githubusercontent.com/projector22/up/master/src/uninstall.sh | bash
 ```
 
 ## Update Types Available
