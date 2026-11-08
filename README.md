@@ -2,6 +2,12 @@
 
 Perform an update on various linuxy systems and tools.
 
+## Install
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/projector22/up/master/install.sh | bash
+```
+
 ## Update Types Available
 
 ### Application Managers
