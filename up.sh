@@ -263,7 +263,7 @@ if hash pipx 2>/dev/null; then
     pipx upgrade-all
 fi
 
-if [ -n "$NTFY_URL" ]; then
+if [ -n "${NTFY_URL:-}" ]; then
   send_ntfy "$NTFY_URL" "System update complete ✅"
 fi
 
