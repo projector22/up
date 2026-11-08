@@ -1,5 +1,15 @@
 # up
 
+## v0.3.0 - 2026-11-08
+
+### Added
+
+- Added script to install, uninstall and update `up`.
+
+### Changed
+
+- Seperated out NTFY tooling to it's own script.
+
 ## v0.2.0 - 2023-11-01
 
 ### Added
