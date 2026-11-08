@@ -29,6 +29,7 @@
 # Ask for Super User password immediately.
 
 sudo ls >/dev/null
+source "$(dirname "${BASH_SOURCE[0]}")/src/ntfy.sh"
 
 config_dir="$HOME/.config/up"
 config_file="$config_dir/up.dat"
