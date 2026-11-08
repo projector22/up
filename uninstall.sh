@@ -15,5 +15,5 @@ if [[ -d "$INSTALL_DIR" ]]; then
 	rm -rf "$INSTALL_DIR"
 fi
 
-printf "%s\n" "Done"
+printf " %s\n" "Done"
 
