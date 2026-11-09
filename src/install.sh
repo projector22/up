@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-INSTALL_DIR=~/.up
+INSTALL_DIR="$HOME"/.up
 REPO=https://github.com/projector22/up.git
-BIN_DIR=~/bin
+BIN_DIR="$HOME"/bin
 
 if [[ -d "$INSTALL_DIR" ]]; then
 	rm -rf "$INSTALL_DIR"

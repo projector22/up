@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-INSTALL_DIR=~/.up
+INSTALL_DIR="$HOME"/.up
 
 cd "$INSTALL_DIR" || return 1
 

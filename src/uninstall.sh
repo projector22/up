@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-INSTALL_DIR=~/.up
-BIN_DIR=~/bin
+INSTALL_DIR="$HOME"/.up
+BIN_DIR="$HOME"/bin
 
 printf "%s" "Uninstalling UP..."
 
