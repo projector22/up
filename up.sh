@@ -103,7 +103,7 @@ then
 fi
 
 
-printf "Checking for all available updates for your system."
+printf "%s\n" "Checking for all available updates for your system."
 
 
 # Update the LNS package as well as all the other subpackages used by LNS
