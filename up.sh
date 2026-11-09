@@ -29,7 +29,7 @@
 # Ask for Super User password immediately.
 
 sudo ls >/dev/null
-INSTALL_DIR=~/.up
+INSTALL_DIR="$HOME/.up"
 
 if [[ -d "$INSTALL_DIR" ]]; then
   source "$INSTALL_DIR"/src/ntfy.sh
@@ -51,7 +51,6 @@ SKIP_YUM=1
 SKIP_PACMAN=1
 SKIP_FLATPAK=1
 SKIP_PIHOLE=1
-INCLUDE_PIP=0
 SKIP_RCLONE=1
 SKIP_RUSTUP=1
 SET_NTFY_URL=0
@@ -84,9 +83,6 @@ while [[ $# -gt 0 ]]; do
     --skip-pihole)
       SKIP_PIHOLE=0
     ;;
-    --include-pip)
-      INCLUDE_PIP=1
-    ;;
     --skip-rclone)
       SKIP_RCLONE=0
     ;;
@@ -100,18 +96,6 @@ while [[ $# -gt 0 ]]; do
   esac
   shift
 done
-
-validate_url() {
-    local url="$1"
-    url_regex="^(http|https)://[A-Za-z0-9.-]+(/[A-Za-z0-9.-]+)*$"
-    
-    if [[ $url =~ $url_regex ]]; then
-      return 0
-    else
-      echo "Invalid URL: $url"
-      exit 1
-    fi
-}
 
 if [ $SET_NTFY_URL -ne 0 ] 
 then
@@ -140,7 +124,7 @@ then
   cd ~/bin/apps/up || exit 1
   PREV=$(git rev-list HEAD -n 1)
   git pull
-  if test "$PREV" != $(git rev-list HEAD -n 1)
+  if test "$PREV" != "$(git rev-list HEAD -n 1)"
   then
     echo "Script Updated"
     cd ~/bin || exit 1
@@ -245,16 +229,6 @@ then
   if hash rustup 2>/dev/null; then
     printf "\n%s\n" "RUSTUP"
     rustup update stable
-  fi
-fi
-
-if [ $INCLUDE_PIP -ne 0 ]
-then
-  # Check if any PIP3 updates exist.
-  if hash pip3 2>/dev/null; then
-    printf "\n%s\n%s\n\n" "PIP3" "run pip3 install -U APPNAME to update an individual package"
-    pip3 list --outdated
-    # pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U 
   fi
 fi
 
