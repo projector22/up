@@ -108,37 +108,37 @@ printf "Checking for all available updates for your system."
 
 # Update the LNS package as well as all the other subpackages used by LNS
 
-if [ $SKIP_SELF_UPDATE -ne 0 ]
-then
+# if [ $SKIP_SELF_UPDATE -ne 0 ]
+# then
 
-  # Update LNS
+#   # Update LNS
 
-  printf "\n%s" "Updating LNS..."
-  cd ~/bin || exit 1
-  git pull
+#   printf "\n%s" "Updating LNS..."
+#   cd ~/bin || exit 1
+#   git pull
 
 
-  # Update UP specifically and restart the script (skipping this section if an update is detected)
+#   # Update UP specifically and restart the script (skipping this section if an update is detected)
 
-  printf "Updating this script..."
-  cd ~/bin/apps/up || exit 1
-  PREV=$(git rev-list HEAD -n 1)
-  git pull
-  if test "$PREV" != "$(git rev-list HEAD -n 1)"
-  then
-    echo "Script Updated"
-    cd ~/bin || exit 1
-    lns --update # Update the LNS called repos packages
-    up --skip-self-update "$@"
-    exit 0
-  fi
-  lns --update # Update the LNS called repos packages
+#   printf "Updating this script..."
+#   cd ~/bin/apps/up || exit 1
+#   PREV=$(git rev-list HEAD -n 1)
+#   git pull
+#   if test "$PREV" != "$(git rev-list HEAD -n 1)"
+#   then
+#     echo "Script Updated"
+#     cd ~/bin || exit 1
+#     lns --update # Update the LNS called repos packages
+#     up --skip-self-update "$@"
+#     exit 0
+#   fi
+#   lns --update # Update the LNS called repos packages
 
-  ##
-  # TODO:
-  #    Detect if a new package exists in LNS and pull it.
-  ##
-fi
+#   ##
+#   # TODO:
+#   #    Detect if a new package exists in LNS and pull it.
+#   ##
+# fi
 
 
 # Update APT / NALA
