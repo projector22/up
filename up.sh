@@ -111,7 +111,7 @@ printf "%s\n" "Checking for all available updates for your system."
 if [ $SKIP_SELF_UPDATE -ne 0 ]
 then
   if [[ -d "$HOME"/.lns ]]; then
-    printf "\n%s" "Updating LNS..."
+    printf "\n%s" "Updating LNS... "
     cd "$HOME"/.lns || exit 1
     git pull
     lns --update
