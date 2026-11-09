@@ -5,7 +5,7 @@ set -euo pipefail
 INSTALL_DIR=~/.up
 BIN_DIR=~/bin
 
-printf "%s" "Uninstalling..."
+printf "%s" "Uninstalling UP..."
 
 if [[ -L "$BIN_DIR/up" ]]; then
 	unlink "$BIN_DIR/up"
@@ -16,4 +16,3 @@ if [[ -d "$INSTALL_DIR" ]]; then
 fi
 
 printf " %s\n" "Done"
-
