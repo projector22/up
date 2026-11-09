@@ -18,12 +18,12 @@ curl -fsSL https://raw.githubusercontent.com/projector22/up/master/src/uninstall
 
 ### Application Managers
 
-- Apt
-- Nala (Apt frontend)
+- Apt & Nala (Apt frontend)
+- DNF / Yum
+- Pacman
 - Snap
 - Flatpak
-- DNF / Yum
-- Pip3 - Only lists updates.
+- Pipx.
 
 ### Specific Applications
 
