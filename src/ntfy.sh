@@ -39,6 +39,18 @@ function send_ntfy() {
 Sent from $USER_NAME@$HOST_NAME 🧔💻" $URL >/dev/null 2>&1
 }
 
+validate_url() {
+    local URL="$1"
+    URL_REGEX="^(http|https)://[A-Za-z0-9.-]+(/[A-Za-z0-9.-]+)*$"
+    
+    if [[ $URL =~ $URL_REGEX ]]; then
+      return 0
+    else
+      echo "Invalid URL: $URL"
+      exit 1
+    fi
+}
+
 function set_ntfy_URL() {
     NTFY_URL=$1
     NEW_URL=$2

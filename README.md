@@ -32,6 +32,10 @@ curl -fsSL https://raw.githubusercontent.com/projector22/up/master/src/uninstall
 - [Rust](https://github.com/rust-lang/rustup)
 - [Linux New System](https://github.com/projector22/linux-new-system)
 
+### Integration With NTFY
+
+You can configre [NTFY](https://github.com/binwiederhier/ntfy) to notify you of a completed update.
+
 ## Todo
 
 - Add flag to force Apt over Nala.
