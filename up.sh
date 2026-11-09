@@ -108,8 +108,10 @@ printf "Checking for all available updates for your system."
 
 # Update the LNS package as well as all the other subpackages used by LNS
 
-# if [ $SKIP_SELF_UPDATE -ne 0 ]
-# then
+if [ $SKIP_SELF_UPDATE -ne 0 ]
+then
+
+  lns --update
 
 #   # Update LNS
 
@@ -138,7 +140,7 @@ printf "Checking for all available updates for your system."
 #   # TODO:
 #   #    Detect if a new package exists in LNS and pull it.
 #   ##
-# fi
+fi
 
 
 # Update APT / NALA
